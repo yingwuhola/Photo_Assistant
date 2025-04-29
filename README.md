@@ -55,7 +55,7 @@ While keeping all other parameters constant, the number of training epochs was a
 While keeping all other parameters fixed, the learning rate was adjusted to observe its impact on training performance. A learning rate of 0.005 produced the best results, with an accuracy of 96.1%. When the learning rate was set to 0.001, the accuracy dropped slightly to 95.7%, likely due to slower convergence caused by smaller parameter update steps. In contrast, increasing the learning rate to 0.008 resulted in a significantly lower accuracy of 93.1%, possibly because the updates were too large, causing the model to oscillate around the optimal loss instead of converging smoothly.
 <p align="center">
   <img src="images/Picture33.png" width="35%">
-  <img src="images/Picture3.png" width="35%">
+  <img src="images/Picture3.jpg" width="35%">
 </p>
 
 # Results and Observations
