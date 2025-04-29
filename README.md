@@ -23,7 +23,13 @@ The trained model was deployed onto the Arduino Nano 33 BLE board for real-time 
 ### data sources 
 To reduce errors, audio data was collected using two methods: a smartphone microphone and the built-in microphone on the Arduino board. The smartphone microphone allowed for faster and more convenient data collection, while the Arduino microphone provided samples that were closer to real-world application scenarios. Additionally, to increase the diversity of the dataset, the recordings were made by people of different nationalities, ages, and genders. Their variations in speech rate and pronunciation habits helped improve the model’s accuracy and robustness. Audio samples included the three target keywords — “picture,” “left,” and “right” — as well as various random words from everyday conversation.
 ### data processing
-A total of four labels were set: “picture,” “left,” “right,” and “unknown.” To minimize the impact of background noise, the recorded audio samples were split into 1-second segments. It is important to note that Edge Impulse Studio provides an automatic segmentation feature. However, during practical use, I found that automatic segmentation was sometimes not completely accurate and could miss parts of a word, so manual verification was necessary. Below are the spectrograms of the four labels. 
+A total of four labels were set: “picture,” “left,” “right,” and “unknown.” To minimize the impact of background noise, the recorded audio samples were split into 1-second segments. It is important to note that Edge Impulse Studio provides an automatic segmentation feature. However, during practical use, I found that automatic segmentation was sometimes not completely accurate and could miss parts of a word, so manual verification was necessary. Below are the spectrograms of the four labels.
+<p align="center">
+  <img src="images/Picture1.png" width="23%">
+  <img src="images/Picture2.png" width="23%">
+  <img src="images/Picture11.png" width="23%">
+  <img src="images/Picture22.png" width="23%">
+</p>
 ### dataset
 The total duration of the dataset is 24m 9s, with the training set lasting 19m 20s and the testing set lasting 4m 49s, resulting in an approximate 80/20 train/test split. This dataset is relatively balanced, with a similar number of samples for each label. 
 ## Model
@@ -46,7 +52,10 @@ After enabling “Auto-weight classes,” Edge Impulse automatically adjusted th
 While keeping all other parameters constant, the number of training epochs was adjusted to evaluate its impact on model performance. The best results were achieved at 100 epochs, yielding an accuracy of 96.1%. At 90 epochs, the model reached 95.3% accuracy, likely due to underfitting, as the training loss was still decreasing and the model had not yet fully converged. On the other hand, increasing to 110 epochs resulted in a slightly lower accuracy of 95.7%, which may be attributed to overfitting.
 3. Learning rate
 While keeping all other parameters fixed, the learning rate was adjusted to observe its impact on training performance. A learning rate of 0.005 produced the best results, with an accuracy of 96.1%. When the learning rate was set to 0.001, the accuracy dropped slightly to 95.7%, likely due to slower convergence caused by smaller parameter update steps. In contrast, increasing the learning rate to 0.008 resulted in a significantly lower accuracy of 93.1%, possibly because the updates were too large, causing the model to oscillate around the optimal loss instead of converging smoothly.
-<img src="images/Picture3.png" alt="" width="400">
+<p align="center">
+  <img src="images/Picture33.png" width="40%">
+  <img src="images/Picture33.png" width="40%">
+</p>
 
 # Results and Observations
 ## Result
