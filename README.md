@@ -20,12 +20,14 @@ Data preprocessing and model training were performed on the Edge Impulse platfor
 3. Deployment:
 The trained model was deployed onto the Arduino Nano 33 BLE board for real-time keyword detection. The microcontroller was then programmed to trigger the corresponding LED indicators based on recognized commands, allowing for functional testing and validation of the system’s performance.
 ## Data
-data sources 
+data sources
+
 To reduce errors, audio data was collected using two methods: a smartphone microphone and the built-in microphone on the Arduino board. The smartphone microphone allowed for faster and more convenient data collection, while the Arduino microphone provided samples that were closer to real-world application scenarios. Additionally, to increase the diversity of the dataset, the recordings were made by people of different nationalities, ages, and genders. Their variations in speech rate and pronunciation habits helped improve the model’s accuracy and robustness. Audio samples included the three target keywords — “picture,” “left,” and “right” — as well as various random words from everyday conversation.
+
 data processing
 A total of four labels were set: “picture,” “left,” “right,” and “unknown.” To minimize the impact of background noise, the recorded audio samples were split into 1-second segments. It is important to note that Edge Impulse Studio provides an automatic segmentation feature. However, during practical use, I found that automatic segmentation was sometimes not completely accurate and could miss parts of a word, so manual verification was necessary. 
 Below are the spectrograms of the four labels. 
-<img src="images/Picture1.png" alt="" width="400"><img src="images/Picture2.png" alt="" width="400">
+
 dataset
 The total duration of the dataset is 24m 9s, with the training set lasting 19m 20s and the testing set lasting 4m 49s, resulting in an approximate 80/20 train/test split. This dataset is relatively balanced, with a similar number of samples for each label. 
 ## Model
