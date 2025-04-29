@@ -21,27 +21,25 @@ Data preprocessing and model training were performed on the Edge Impulse platfor
 The trained model was deployed onto the Arduino Nano 33 BLE board for real-time keyword detection. The microcontroller was then programmed to trigger the corresponding LED indicators based on recognized commands, allowing for functional testing and validation of the system’s performance.
 ## Data
 data sources
-
 To reduce errors, audio data was collected using two methods: a smartphone microphone and the built-in microphone on the Arduino board. The smartphone microphone allowed for faster and more convenient data collection, while the Arduino microphone provided samples that were closer to real-world application scenarios. Additionally, to increase the diversity of the dataset, the recordings were made by people of different nationalities, ages, and genders. Their variations in speech rate and pronunciation habits helped improve the model’s accuracy and robustness. Audio samples included the three target keywords — “picture,” “left,” and “right” — as well as various random words from everyday conversation.
-
 data processing
 A total of four labels were set: “picture,” “left,” “right,” and “unknown.” To minimize the impact of background noise, the recorded audio samples were split into 1-second segments. It is important to note that Edge Impulse Studio provides an automatic segmentation feature. However, during practical use, I found that automatic segmentation was sometimes not completely accurate and could miss parts of a word, so manual verification was necessary. 
 Below are the spectrograms of the four labels. 
-
 dataset
 The total duration of the dataset is 24m 9s, with the training set lasting 19m 20s and the testing set lasting 4m 49s, resulting in an approximate 80/20 train/test split. This dataset is relatively balanced, with a similar number of samples for each label. 
 ## Model
 Based on keyword recognition, this project adopts a 1D convolutional neural network (1D CNN) model. The model architecture is shown below.
-1.Input layer: Receives a 650-dimension MFCC vector and reshapes it into a 50 × 13 time-frequency matrix for the convolutional network to process.
-2.First convolutional module: Eight 1-D convolution filters (kernel width = 3) followed by max-pooling, halving the time axis while ReLU extracts short-term spectral features. 
-3.Dropout 0.25: Randomly deactivates 25 % of the channels to reduce over-fitting on local patterns. 
-4.Second convolutional module: Sixteen 1-D convolution filters (kernel width = 3) plus max-pooling, further compressing the time axis and learning higher-level time-frequency patterns. 
-5.Dropout 0.25: Applies another round of random masking on deeper features to improve generalization.
-6.Output layer: Flattens the features into a 208-dimension vector, then uses a softmax layer to output probabilities for four classes (“left”, “picture”, “right”, “unknown”). 
+1. Input layer: Receives a 650-dimension MFCC vector and reshapes it into a 50 × 13 time-frequency matrix for the convolutional network to process.
+2. First convolutional module: Eight 1-D convolution filters (kernel width = 3) followed by max-pooling, halving the time axis while ReLU extracts short-term spectral features. 
+3. Dropout 0.25: Randomly deactivates 25 % of the channels to reduce over-fitting on local patterns. 
+4. Second convolutional module: Sixteen 1-D convolution filters (kernel width = 3) plus max-pooling, further compressing the time axis and learning higher-level time-frequency patterns. 
+5. Dropout 0.25: Applies another round of random masking on deeper features to improve generalization.
+6. Output layer: Flattens the features into a 208-dimension vector, then uses a softmax layer to output probabilities for four classes (“left”, “picture”, “right”, “unknown”). 
 ## Experiments
 At the early stage of the project, five labels were defined: “left,” “right,” “picture,” “unknown,” and “noise.” The “noise” label was used to collect various types of background sounds, such as conversations, wind, and keyboard typing, to enhance the model’s robustness against environmental noise. During training, the model achieved approximately 95.1% accuracy, suggesting good performance. However, when deployed on the Arduino Nano 33 BLE Sense board for real-world testing, it became apparent that the device struggled to accurately recognize the “picture” keyword. Most inputs were incorrectly classified as “noise.”
 <br>Upon analysis, it was suspected that although adding a “noise” class theoretically improved noise resilience, the wake word samples themselves often contained background noise. This led the model to mistakenly classify actual keywords as “noise” during inference, significantly impacting recognition performance.
 <br>To address this issue, the “noise” label was later removed, retaining only four classes: “left,” “right,” “picture,” and “unknown.” With this adjustment, the model maintained a training accuracy of around 95.3%. More importantly, real-world testing on the Arduino board showed a noticeable improvement in correctly recognizing the “picture” keyword, greatly enhancing system accuracy under real conditions.
+
 parameter adjustment
 1.Auto-weight classes
 After enabling “Auto-weight classes,” Edge Impulse automatically adjusted the loss function weights based on the number of samples in each class. This allowed minority classes, such as “left” and “right,” to have comparable influence during training as the majority class. Previously, with uniform class weights, the model tended to favor the most represented class, “unknown,” resulting in an overall accuracy of only 95.3%. After applying automatic class weighting, the impact of minority classes was amplified, leading to improved recall for those classes and raising the overall accuracy to 96.1%.
@@ -54,6 +52,7 @@ While keeping all other parameters fixed, the learning rate was adjusted to obse
 ## Result
 The trained model achieved a high accuracy of 96.1% with a low loss of 0.12, and even on the test set, it maintained an impressive accuracy of 95.5%. This demonstrates the model’s strong ability to distinguish between different types of sounds in real-world environments.
 <img src="images/Picture4.png" alt="" width="400">
+
 The confusion matrix shows that the three target classes are generally well separated, indicating clear distinctions between the keywords. Although some overlaps and misclassifications exist, they do not significantly affect the overall training outcome or system performance.
 <img src="images/Picture5.png" alt="" width="400">
 ## Limitations
@@ -64,7 +63,7 @@ During the first deployment to the Arduino board, the device consistently failed
 2. Combine an Arduino Nano 33 BLE camera with a servo motor and design a custom enclosure.
 ## Bibliography
 1. Edgeimpulse.com. (2024). Arduino Nano 33 BLE Sense | Edge Impulse Documentation. [online] Available at: https://docs.edgeimpulse.com/docs/edge-ai-hardware/mcu/arduino-nano-33-ble-sense.
-2.Edgeimpulse.com. (2025). Keyword spotting | Edge Impulse Documentation. [online] Available at: https://docs.edgeimpulse.com/docs/tutorials/end-to-end-tutorials/audio/responding-to-your-voice [Accessed 29 Apr. 2025].
+2. Edgeimpulse.com. (2025). Keyword spotting | Edge Impulse Documentation. [online] Available at: https://docs.edgeimpulse.com/docs/tutorials/end-to-end-tutorials/audio/responding-to-your-voice [Accessed 29 Apr. 2025].
 ## Declarations
-I, AUTHORS Ying Wu, confirm that the work presented in this assessment is my own. Where information has been derived from other sources, I confirm that this has been indicated in the work.
+I, Ying Wu, confirm that the work presented in this assessment is my own. Where information has been derived from other sources, I confirm that this has been indicated in the work.
 Word Count: 1500 words
