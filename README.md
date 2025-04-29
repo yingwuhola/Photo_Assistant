@@ -30,6 +30,7 @@ A total of four labels were set: “picture,” “left,” “right,” and “
   <img src="images/Picture11.png" width="23%">
   <img src="images/Picture22.png" width="23%">
 </p>
+
 ### dataset
 The total duration of the dataset is 24m 9s, with the training set lasting 19m 20s and the testing set lasting 4m 49s, resulting in an approximate 80/20 train/test split. This dataset is relatively balanced, with a similar number of samples for each label. 
 ## Model
@@ -53,8 +54,8 @@ While keeping all other parameters constant, the number of training epochs was a
 3. Learning rate
 While keeping all other parameters fixed, the learning rate was adjusted to observe its impact on training performance. A learning rate of 0.005 produced the best results, with an accuracy of 96.1%. When the learning rate was set to 0.001, the accuracy dropped slightly to 95.7%, likely due to slower convergence caused by smaller parameter update steps. In contrast, increasing the learning rate to 0.008 resulted in a significantly lower accuracy of 93.1%, possibly because the updates were too large, causing the model to oscillate around the optimal loss instead of converging smoothly.
 <p align="center">
-  <img src="images/Picture33.png" width="40%">
-  <img src="images/Picture33.png" width="40%">
+  <img src="images/Picture33.png" width="35%">
+  <img src="images/Picture3.png" width="35%">
 </p>
 
 # Results and Observations
